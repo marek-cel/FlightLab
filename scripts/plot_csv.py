@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 import math
 import pandas as pd
 import plotly.graph_objects as go
@@ -13,12 +16,12 @@ def plot_csv(csv_file: str = 'output/data_log.csv', nrows: int = 3, ncols: int =
     """
 
     df = pd.read_csv(csv_file, skipinitialspace=True)
-    
+
     # df.to_numpy()
     # df = df[:800].astype(float)
 
     df = df.replace('-nan(ind)', np.nan).astype(float)
-    
+
     df["sns_imu_gyro_x"] *= 180/math.pi
     df["sns_imu_gyro_y"] *= 180/math.pi
     df["sns_imu_gyro_z"] *= 180/math.pi

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+
 '''
 Show flight visualization in FlightGear
 '''
@@ -103,15 +106,15 @@ def ned_to_latlon(lat0, lon0, ned_n, ned_e, ned_d):
 
     return (lat_rad, lon_rad, alt_m)
 
-    
+
 def fdm_callback(fdm_data, event_pipe):
     """"
     Updates the FlightGear FDM with new data from a control loop.
     """
 
     if event_pipe.child_poll():
-        data, = event_pipe.child_recv()  # unpack 
-        
+        data, = event_pipe.child_recv()  # unpack
+
         # Origin of NED frame in Lat Lon
         origin_lat_rad = np.radians(63.9797)
         origin_lon_rad = np.radians(-22.5862)
@@ -131,7 +134,7 @@ def fdm_callback(fdm_data, event_pipe):
         fdm_data.phi_rad = data["X_phi"]
         fdm_data.theta_rad = data["X_theta"]
         fdm_data.psi_rad = data["X_psi"]
-        
+
         # Control surfaces
         fdm_data.elevator = data["u_de"]
         fdm_data.rudder = data["u_dr"]
@@ -153,7 +156,7 @@ def run_replay(csv_file):
     fdm_conn.start()
 
     df = pd.read_csv(csv_file, skipinitialspace=True)
-    
+
     df = df.replace('-nan(ind)', np.nan).astype(float)
 
     # use sim time from first row as reference
